@@ -28,12 +28,15 @@
 
         .wrap {
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
         .body-grid {
             display: grid;
             grid-template-columns: 240px 1fr;
-            min-height: calc(100vh - 74px);
+            flex: 1;
+            min-height: 0;
         }
 
         .body-grid>* {
@@ -182,11 +185,12 @@
             width: 100%;
             border-collapse: collapse;
             background: #fff;
+            border: 1px solid #e5e7eb;
         }
 
         th,
         td {
-            border-bottom: 1px solid #e5e7eb;
+            border: 1px solid #e5e7eb;
             padding: 10px;
             text-align: left;
             vertical-align: top;
