@@ -106,7 +106,7 @@
             align-items: center;
             background: #fff;
             border-bottom: 1px solid #e5e7eb;
-            padding: 12px 16px;
+            padding: 3px 18px;
             position: sticky;
             top: 0;
             z-index: 60;
@@ -124,13 +124,19 @@
         }
 
         .top-header-title {
-            font-weight: 700;
-            font-size: 18px;
-            color: var(--secondary);
+            display: inline-flex;
+            align-items: center;
+            line-height: 0;
             position: static;
             transform: none;
             white-space: nowrap;
             text-decoration: none;
+        }
+
+        .top-header-logo {
+            height: 66px;
+            width: auto;
+            display: block;
         }
 
         .menu-toggle {
@@ -501,11 +507,15 @@
 
         @media (max-width: 640px) {
             .top-header {
-                padding: 10px 12px;
+                padding: 8px 12px;
             }
 
             .top-header-title {
-                font-size: 16px;
+                max-width: 170px;
+            }
+
+            .top-header-logo {
+                height: 40px;
             }
 
             .btn {
@@ -529,7 +539,9 @@
         <div class="top-header">
             <div class="top-header-left">
                 <button type="button" class="menu-toggle" id="menuToggle" aria-label="Open menu">☰</button>
-                <a href="{{ route('admin.dashboard') }}" class="top-header-title">ERP17</a>
+                <a href="{{ route('admin.dashboard') }}" class="top-header-title" aria-label="ERP17 dashboard">
+                    <img src="{{ asset('ERP17-header.png') }}" alt="ERP17" class="top-header-logo">
+                </a>
             </div>
             <form method="POST" action="{{ route('admin.logout') }}" class="logout-form">
                 @csrf
