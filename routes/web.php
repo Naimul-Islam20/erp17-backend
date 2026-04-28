@@ -4,6 +4,8 @@ use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ExpertSessionController as AdminExpertSessionController;
+use App\Http\Controllers\Admin\NewsletterController;
+use App\Http\Controllers\Admin\NewsletterCategoryController;
 use App\Http\Controllers\Admin\QuoteRequestController as AdminQuoteRequestController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\ContactFormController;
@@ -55,5 +57,12 @@ Route::prefix('admin')->group(function (): void {
         Route::resource('expert-sessions', AdminExpertSessionController::class)
             ->only(['index', 'show', 'destroy'])
             ->names('admin.expert-sessions');
+
+        Route::resource('newsletters', NewsletterController::class)
+            ->names('admin.newsletters');
+
+        Route::resource('newsletter-categories', NewsletterCategoryController::class)
+            ->except(['show'])
+            ->names('admin.newsletter-categories');
     });
 });

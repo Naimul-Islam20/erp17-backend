@@ -308,6 +308,32 @@
             grid-template-columns: repeat(2, minmax(0, 1fr));
         }
 
+        .detail-list {
+            display: grid;
+            gap: 10px;
+        }
+
+        .detail-row {
+            display: grid;
+            grid-template-columns: 180px minmax(0, 1fr);
+            gap: 12px;
+            padding: 10px 12px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            background: #f8fafc;
+        }
+
+        .detail-label {
+            color: #475569;
+            font-weight: 700;
+        }
+
+        .detail-value {
+            color: #0f172a;
+            word-break: break-word;
+            white-space: normal;
+        }
+
         @media (max-width: 1100px) {
             .body-grid {
                 grid-template-columns: 200px 1fr;
@@ -434,6 +460,11 @@
                 grid-template-columns: 1fr;
             }
 
+            .detail-row {
+                grid-template-columns: 1fr;
+                gap: 6px;
+            }
+
             .top-header {
                 gap: 10px;
             }
@@ -511,6 +542,8 @@
                     <a class="{{ request()->routeIs('admin.quote-requests.*') ? 'active' : '' }}" href="{{ route('admin.quote-requests.index') }}">Quote Requests</a>
                     <a class="{{ request()->routeIs('admin.expert-sessions.*') ? 'active' : '' }}" href="{{ route('admin.expert-sessions.index') }}">Free Consultation Requests</a>
                     <a class="{{ request()->routeIs('admin.contact-messages.*') ? 'active' : '' }}" href="{{ route('admin.contact-messages.index') }}">Contact Form</a>
+                    <a class="{{ request()->routeIs('admin.newsletters.*') ? 'active' : '' }}" href="{{ route('admin.newsletters.index') }}">Newsletter</a>
+                    <a class="{{ request()->routeIs('admin.newsletter-categories.*') ? 'active' : '' }}" href="{{ route('admin.newsletter-categories.index') }}">Newsletter Categories</a>
                 </nav>
             </aside>
             <main>
