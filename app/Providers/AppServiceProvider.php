@@ -2,6 +2,15 @@
 
 namespace App\Providers;
 
+use App\Models\ContactMessage;
+use App\Models\ExpertSession;
+use App\Models\QuoteRequest;
+use App\Models\User;
+use App\Policies\ContactMessagePolicy;
+use App\Policies\ExpertSessionPolicy;
+use App\Policies\QuoteRequestPolicy;
+use App\Policies\UserPolicy;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +28,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Gate::policy(User::class, UserPolicy::class);
+        Gate::policy(ContactMessage::class, ContactMessagePolicy::class);
+        Gate::policy(QuoteRequest::class, QuoteRequestPolicy::class);
+        Gate::policy(ExpertSession::class, ExpertSessionPolicy::class);
     }
 }

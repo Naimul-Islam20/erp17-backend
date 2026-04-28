@@ -5,16 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ContactMessage extends Model
+class ExpertSession extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'full_name',
+        'name',
+        'company_name',
+        'designation',
+        'mobile',
         'email',
-        'phone',
-        'subject',
-        'message',
         'status',
     ];
 }
