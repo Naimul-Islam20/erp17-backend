@@ -23,7 +23,7 @@
                 <label for="password">Password</label>
                 <input id="password" name="password" type="password" required>
                 <small style="display:block; margin-top:6px; color:#64748b;">
-                    Password rules: minimum 12 characters, must include uppercase, lowercase, number, and symbol.
+                    Password rules: minimum 6 characters.
                 </small>
                 @error('password') <div class="error">{{ $message }}</div> @enderror
             </div>

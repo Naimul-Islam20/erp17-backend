@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\ContactMessage;
+use App\Models\Education;
 use App\Models\ExpertSession;
 use App\Models\Blog;
 use App\Models\Newsletter;
@@ -11,6 +12,7 @@ use App\Models\QuoteRequest;
 use App\Models\User;
 use App\Policies\BlogPolicy;
 use App\Policies\ContactMessagePolicy;
+use App\Policies\EducationPolicy;
 use App\Policies\ExpertSessionPolicy;
 use App\Policies\NewsletterPolicy;
 use App\Policies\NewsletterCategoryPolicy;
@@ -37,6 +39,7 @@ class AppServiceProvider extends ServiceProvider
         Gate::policy(User::class, UserPolicy::class);
         Gate::policy(ContactMessage::class, ContactMessagePolicy::class);
         Gate::policy(QuoteRequest::class, QuoteRequestPolicy::class);
+        Gate::policy(Education::class, EducationPolicy::class);
         Gate::policy(ExpertSession::class, ExpertSessionPolicy::class);
         Gate::policy(Blog::class, BlogPolicy::class);
         Gate::policy(Newsletter::class, NewsletterPolicy::class);

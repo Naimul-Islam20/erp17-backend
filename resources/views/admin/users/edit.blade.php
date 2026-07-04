@@ -22,16 +22,12 @@
             </div>
             <div>
                 <label for="password">Password</label>
-                <input id="password" name="password" type="password" placeholder="Password">
-                <small style="display:block; margin-top:6px; color:#64748b;">Leave blank to keep current password.</small>
-                <small style="display:block; margin-top:4px; color:#64748b;">
-                    New password rules: minimum 12 characters, must include uppercase, lowercase, number, and symbol.
-                </small>
+                <input id="password" name="password" type="text" value="{{ old('password') }}">
                 @error('password') <div class="error">{{ $message }}</div> @enderror
             </div>
             <div>
                 <label for="password_confirmation">Confirm Password</label>
-                <input id="password_confirmation" name="password_confirmation" type="password">
+                <input id="password_confirmation" name="password_confirmation" type="text" value="{{ old('password_confirmation') }}">
             </div>
             <div>
                 <label for="role">Role</label>

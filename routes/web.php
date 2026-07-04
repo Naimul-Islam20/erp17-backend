@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\EducationController;
 use App\Http\Controllers\Admin\ExpertSessionController as AdminExpertSessionController;
 use App\Http\Controllers\Admin\NewsletterController;
 use App\Http\Controllers\Admin\NewsletterCategoryController;
@@ -68,5 +69,9 @@ Route::prefix('admin')->group(function (): void {
 
         Route::resource('blogs', BlogController::class)
             ->names('admin.blogs');
+
+        Route::resource('educations', EducationController::class)
+            ->except(['show'])
+            ->names('admin.educations');
     });
 });

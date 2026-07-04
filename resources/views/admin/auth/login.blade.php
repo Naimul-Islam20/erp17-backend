@@ -5,11 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Login</title>
+    <link rel="icon" type="image/png" href="{{ asset('Website.png') }}">
     <style>
         :root {
-            --primary: #e9a70e;
-            --primary-hover: #f4bd35;
-            --secondary: #1e1e6d;
+            --primary: #3ba100;
+            --primary-hover: #4db60f;
+            --secondary: #54575a;
             --bg-soft: #edf2f9;
             --text: #0f172a;
             --muted: #64748b;
@@ -29,7 +30,7 @@
             place-items: center;
             padding: 18px;
             background:
-                radial-gradient(circle at 12% 16%, rgba(233, 167, 14, 0.12), transparent 28%),
+                radial-gradient(circle at 12% 16%, rgba(59, 161, 0, 0.12), transparent 28%),
                 var(--bg-soft);
             font-family: Arial, sans-serif;
             color: var(--text);
@@ -84,7 +85,8 @@
         }
 
         input[type="email"],
-        input[type="password"] {
+        input[type="password"],
+        input[type="text"] {
             width: 100%;
             padding: 12px 13px;
             border: 1px solid var(--border);
@@ -97,25 +99,53 @@
         }
 
         input[type="email"]:focus,
-        input[type="password"]:focus {
+        input[type="password"]:focus,
+        input[type="text"]:focus {
             border-color: var(--primary);
-            box-shadow: 0 0 0 4px rgba(233, 167, 14, 0.18);
+            box-shadow: 0 0 0 4px rgba(59, 161, 0, 0.18);
         }
 
-        .remember {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 20px;
+        .password-field {
+            position: relative;
+            margin-bottom: 16px;
+        }
+
+        .password-field input {
+            margin-bottom: 0;
+            padding-right: 46px;
+        }
+
+        .password-toggle {
+            position: absolute;
+            top: 50%;
+            right: 12px;
+            transform: translateY(-50%);
+            width: 24px;
+            height: 24px;
+            padding: 0;
+            border: 0;
+            border-radius: 0;
+            background: transparent;
+            color: #64748b;
+            box-shadow: none;
+        }
+
+        .password-toggle:hover {
+            transform: translateY(-50%);
+            background: transparent;
+            box-shadow: none;
             color: #334155;
-            font-size: 14px;
         }
 
-        .remember input {
-            margin: 0;
-            width: 16px;
-            height: 16px;
-            accent-color: var(--primary);
+        .password-toggle svg {
+            width: 20px;
+            height: 20px;
+            display: block;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
         }
 
         .error {
@@ -134,18 +164,18 @@
             padding: 12px;
             border: 0;
             border-radius: 12px;
-            background: linear-gradient(135deg, #f5c84f 0%, var(--primary) 100%);
-            color: #1f2937;
+            background: linear-gradient(135deg, #4db60f 0%, var(--primary) 100%);
+            color: #fff;
             font-weight: 700;
             cursor: pointer;
             transition: transform 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
-            box-shadow: 0 16px 26px rgba(233, 167, 14, 0.24);
+            box-shadow: 0 16px 26px rgba(59, 161, 0, 0.24);
         }
 
         button:hover {
-            background: linear-gradient(135deg, #ffd56a 0%, var(--primary-hover) 100%);
+            background: linear-gradient(135deg, #67c92b 0%, var(--primary-hover) 100%);
             transform: translateY(-1px);
-            box-shadow: 0 18px 28px rgba(233, 167, 14, 0.28);
+            box-shadow: 0 18px 28px rgba(59, 161, 0, 0.28);
         }
 
         @media (max-width: 640px) {
@@ -180,16 +210,48 @@
             <input id="email" name="email" type="email" value="{{ old('email') }}" required>
 
             <label for="password">Password</label>
-            <input id="password" name="password" type="password" required>
-
-            <label class="remember" for="remember">
-                <input id="remember" type="checkbox" name="remember" value="1">
-                Remember me
-            </label>
+            <div class="password-field">
+                <input id="password" name="password" type="password" required>
+                <button type="button" class="password-toggle" id="passwordToggle" aria-label="Show password" aria-pressed="false">
+                    <svg id="passwordToggleIcon" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"></path>
+                        <circle cx="12" cy="12" r="3"></circle>
+                    </svg>
+                </button>
+            </div>
 
             <button type="submit">Sign in</button>
         </form>
     </div>
+    <script>
+        (() => {
+            const passwordInput = document.getElementById('password');
+            const passwordToggle = document.getElementById('passwordToggle');
+            const passwordToggleIcon = document.getElementById('passwordToggleIcon');
+
+            if (!passwordInput || !passwordToggle || !passwordToggleIcon) return;
+
+            const eyeIcon = `
+                <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+            `;
+            const eyeOffIcon = `
+                <path d="m3 3 18 18"></path>
+                <path d="M10.58 10.58a2 2 0 0 0 2.84 2.84"></path>
+                <path d="M9.88 5.09A9.77 9.77 0 0 1 12 5c6.5 0 10 7 10 7a17.6 17.6 0 0 1-2.2 3.19"></path>
+                <path d="M6.61 6.61A17.34 17.34 0 0 0 2 12s3.5 7 10 7a9.9 9.9 0 0 0 4.25-.94"></path>
+            `;
+
+            passwordToggle.addEventListener('click', () => {
+                const showPassword = passwordInput.type === 'password';
+
+                passwordInput.type = showPassword ? 'text' : 'password';
+                passwordToggle.setAttribute('aria-label', showPassword ? 'Hide password' : 'Show password');
+                passwordToggle.setAttribute('aria-pressed', showPassword ? 'true' : 'false');
+                passwordToggleIcon.innerHTML = showPassword ? eyeOffIcon : eyeIcon;
+            });
+        })();
+    </script>
 </body>
 
 </html>

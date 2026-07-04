@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $title ?? 'Admin Panel' }}</title>
+    <link rel="icon" type="image/png" href="{{ asset('Website.png') }}">
     <style>
         :root {
             --primary: #3ba100;
@@ -674,8 +675,8 @@
         input:focus,
         select:focus,
         textarea:focus {
-            border-color: rgba(233, 167, 14, 0.92);
-            box-shadow: 0 0 0 4px rgba(233, 167, 14, 0.16);
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(59, 161, 0, 0.16);
         }
 
         textarea {
@@ -1241,6 +1242,16 @@
                             </svg>
                         </span>
                         <span>Blog</span>
+                    </a>
+                    <a class="{{ request()->routeIs('admin.educations.*') ? 'active' : '' }}" href="{{ route('admin.educations.index') }}">
+                        <span class="nav-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M12 3 3 7.5 12 12l9-4.5L12 3Z"></path>
+                                <path d="M3 12.5 12 17l9-4.5"></path>
+                                <path d="M3 17.5 12 22l9-4.5"></path>
+                            </svg>
+                        </span>
+                        <span>Education</span>
                     </a>
                 </nav>
             </aside>
