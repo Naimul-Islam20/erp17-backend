@@ -40,6 +40,6 @@ class ExpertSessionController extends Controller
         $expertSession->delete();
         AuditLogger::log('admin.expert_session.deleted', $expertSession);
 
-        return redirect()->route('admin.expert-sessions.index')->with('status', 'Expert session request deleted.');
+        return redirect()->route('admin.expert-sessions.index')->with('status', 'Contact deleted successfully.');
     }
 }

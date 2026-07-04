@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ExpertSessionController as AdminExpertSessionController;
@@ -64,5 +65,8 @@ Route::prefix('admin')->group(function (): void {
         Route::resource('newsletter-categories', NewsletterCategoryController::class)
             ->except(['show'])
             ->names('admin.newsletter-categories');
+
+        Route::resource('blogs', BlogController::class)
+            ->names('admin.blogs');
     });
 });

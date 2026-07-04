@@ -34,7 +34,7 @@ class NewsletterCategoryController extends Controller
 
         AuditLogger::log('admin.newsletter_category.created', $category, [], $request);
 
-        return redirect()->route('admin.newsletter-categories.index')->with('status', 'Newsletter category created successfully.');
+        return redirect()->route('admin.newsletter-categories.index')->with('status', 'Category created successfully.');
     }
 
     public function edit(NewsletterCategory $newsletterCategory): View
@@ -60,7 +60,7 @@ class NewsletterCategoryController extends Controller
 
         AuditLogger::log('admin.newsletter_category.updated', $newsletterCategory, [], $request);
 
-        return redirect()->route('admin.newsletter-categories.index')->with('status', 'Newsletter category updated successfully.');
+        return redirect()->route('admin.newsletter-categories.index')->with('status', 'Category updated successfully.');
     }
 
     public function destroy(NewsletterCategory $newsletterCategory): RedirectResponse
@@ -75,6 +75,6 @@ class NewsletterCategoryController extends Controller
 
         AuditLogger::log('admin.newsletter_category.deleted', $newsletterCategory);
 
-        return redirect()->route('admin.newsletter-categories.index')->with('status', 'Newsletter category deleted successfully.');
+        return redirect()->route('admin.newsletter-categories.index')->with('status', 'Category deleted successfully.');
     }
 }

@@ -344,6 +344,164 @@
             white-space: normal;
         }
 
+        .helper-text {
+            display: block;
+            margin-top: 6px;
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        .builder-toolbar {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 16px;
+        }
+
+        .btn-outline {
+            background: #fff;
+            color: var(--secondary);
+            border: 1px solid #cbd5e1;
+        }
+
+        .btn-soft {
+            background: var(--primary-soft);
+            color: var(--secondary);
+            border: 1px solid color-mix(in srgb, var(--primary) 40%, white);
+        }
+
+        .builder-list {
+            display: grid;
+            gap: 14px;
+            margin-top: 16px;
+        }
+
+        .builder-card {
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 14px;
+            background: #f8fafc;
+        }
+
+        .builder-card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .builder-card-title {
+            font-weight: 700;
+            color: var(--secondary);
+        }
+
+        .builder-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-left: auto;
+        }
+
+        .block-preview {
+            margin-top: 10px;
+            max-width: 220px;
+            border: 1px solid #dbe4ef;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #fff;
+        }
+
+        .block-preview img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .empty-builder {
+            padding: 18px;
+            border: 1px dashed #cbd5e1;
+            border-radius: 10px;
+            color: #64748b;
+            background: #f8fafc;
+        }
+
+        .point-input-actions {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            margin-top: 8px;
+            width: 100%;
+        }
+
+        .point-input-row {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            align-items: start;
+            gap: 10px;
+        }
+
+        .point-input-row textarea {
+            min-width: 0;
+            min-height: 42px;
+            height: 42px;
+            resize: vertical;
+        }
+
+        .point-input-addrow {
+            display: flex;
+            justify-content: flex-start;
+            margin-top: 8px;
+        }
+
+        .icon-delete-btn {
+            width: 36px;
+            height: 36px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #fecaca;
+            border-radius: 8px;
+            background: #fff;
+            color: #dc2626;
+            cursor: pointer;
+            font-size: 18px;
+            line-height: 1;
+        }
+
+        .icon-delete-btn:hover {
+            background: #fee2e2;
+            color: #b91c1c;
+        }
+
+        .icon-delete-btn svg {
+            width: 18px;
+            height: 18px;
+            display: block;
+        }
+
+        .icon-add-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            border: 1px solid color-mix(in srgb, var(--primary) 40%, white);
+            border-radius: 8px;
+            background: var(--primary-soft);
+            color: var(--secondary);
+            cursor: pointer;
+            padding: 8px 12px;
+            font-weight: 600;
+        }
+
+        .icon-add-btn:hover {
+            background: #ffeeb0;
+        }
+
+        .icon-add-symbol {
+            font-size: 18px;
+            line-height: 1;
+        }
+
         @media (max-width: 1100px) {
             .body-grid {
                 grid-template-columns: 200px 1fr;
@@ -500,6 +658,11 @@
                 margin: 0;
             }
 
+            .builder-card-header {
+                align-items: center;
+                flex-direction: row;
+            }
+
             table {
                 min-width: 760px;
             }
@@ -556,10 +719,10 @@
                     <a class="{{ request()->routeIs('admin.dashboard') ? 'active' : '' }}" href="{{ route('admin.dashboard') }}">Dashboard</a>
                     <a class="{{ request()->routeIs('admin.users.*') ? 'active' : '' }}" href="{{ route('admin.users.index') }}">Users</a>
                     <a class="{{ request()->routeIs('admin.quote-requests.*') ? 'active' : '' }}" href="{{ route('admin.quote-requests.index') }}">Quote Requests</a>
-                    <a class="{{ request()->routeIs('admin.expert-sessions.*') ? 'active' : '' }}" href="{{ route('admin.expert-sessions.index') }}">Free Consultation Requests</a>
-                    <a class="{{ request()->routeIs('admin.contact-messages.*') ? 'active' : '' }}" href="{{ route('admin.contact-messages.index') }}">Contact Form</a>
+                    <a class="{{ request()->routeIs('admin.expert-sessions.*') ? 'active' : '' }}" href="{{ route('admin.expert-sessions.index') }}">Contact</a>
                     <a class="{{ request()->routeIs('admin.newsletters.*') ? 'active' : '' }}" href="{{ route('admin.newsletters.index') }}">Newsletter</a>
-                    <a class="{{ request()->routeIs('admin.newsletter-categories.*') ? 'active' : '' }}" href="{{ route('admin.newsletter-categories.index') }}">Newsletter Categories</a>
+                    <a class="{{ request()->routeIs('admin.newsletter-categories.*') ? 'active' : '' }}" href="{{ route('admin.newsletter-categories.index') }}">Categorys</a>
+                    <a class="{{ request()->routeIs('admin.blogs.*') ? 'active' : '' }}" href="{{ route('admin.blogs.index') }}">Blog</a>
                 </nav>
             </aside>
             <main>

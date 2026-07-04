@@ -1,8 +1,8 @@
-@extends('layouts.admin', ['title' => 'Consultation Request Details'])
+@extends('layouts.admin', ['title' => 'Contact Details'])
 
 @section('content')
 <div class="header">
-    <h1>Consultation Request Details</h1>
+    <h1>Contact Details</h1>
     <a href="{{ route('admin.expert-sessions.index') }}" class="btn btn-muted">Back</a>
 </div>
 

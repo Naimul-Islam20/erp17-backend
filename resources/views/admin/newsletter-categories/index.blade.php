@@ -1,8 +1,8 @@
-@extends('layouts.admin', ['title' => 'Newsletter Categories'])
+@extends('layouts.admin', ['title' => 'Categorys'])
 
 @section('content')
 <div class="header">
-    <h1>Newsletter Categories</h1>
+    <h1>Categorys</h1>
     <a href="{{ route('admin.newsletter-categories.create') }}" class="btn btn-primary">Create Category</a>
 </div>
 
@@ -36,7 +36,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="4">No newsletter categories found.</td>
+                        <td colspan="4">No categorys found.</td>
                     </tr>
                 @endforelse
             </tbody>

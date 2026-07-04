@@ -1,8 +1,8 @@
-@extends('layouts.admin', ['title' => 'Free Consultation Requests'])
+@extends('layouts.admin', ['title' => 'Contact'])
 
 @section('content')
 <div class="header">
-    <h1>Free Consultation Requests</h1>
+    <h1>Contact</h1>
 </div>
 
 <div class="card">
@@ -45,7 +45,7 @@
             </tr>
             @empty
             <tr>
-                <td colspan="7">No consultation requests found.</td>
+                <td colspan="7">No contact records found.</td>
             </tr>
             @endforelse
         </tbody>

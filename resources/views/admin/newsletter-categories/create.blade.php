@@ -1,8 +1,8 @@
-@extends('layouts.admin', ['title' => 'Create Newsletter Category'])
+@extends('layouts.admin', ['title' => 'Create Category'])
 
 @section('content')
 <div class="header">
-    <h1>Create Newsletter Category</h1>
+    <h1>Create Category</h1>
     <a href="{{ route('admin.newsletter-categories.index') }}" class="btn btn-muted">Back</a>
 </div>
 
