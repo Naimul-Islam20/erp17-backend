@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Newsletter extends Model
 {
@@ -25,5 +26,10 @@ class Newsletter extends Model
     public function category(): BelongsTo
     {
         return $this->belongsTo(NewsletterCategory::class, 'category_id');
+    }
+
+    public function blocks(): HasMany
+    {
+        return $this->hasMany(NewsletterBlock::class)->orderBy('sort_order')->orderBy('id');
     }
 }

@@ -145,6 +145,18 @@ class BlogController extends Controller
                 continue;
             }
 
+            if (in_array($type, ['h2', 'h3', 'h4'], true)) {
+                $payloads[] = [
+                    'type' => $type,
+                    'point_title' => null,
+                    'point_body' => trim((string) ($block['heading_text'] ?? '')),
+                    'image_path' => null,
+                    'sort_order' => $index + 1,
+                ];
+
+                continue;
+            }
+
             $pointInputs = collect((array) ($block['point_inputs'] ?? []))
                 ->map(fn ($item): string => trim((string) $item))
                 ->filter()

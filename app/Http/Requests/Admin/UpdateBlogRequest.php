@@ -25,13 +25,14 @@ class UpdateBlogRequest extends FormRequest
             'category_id' => ['required', 'integer', 'exists:newsletter_categories,id'],
             'title' => ['required', 'string', 'max:255'],
             'blocks' => ['required', 'array', 'min:1'],
-            'blocks.*.type' => ['required', 'in:image,point,description'],
+            'blocks.*.type' => ['required', 'in:image,point,description,h2,h3,h4'],
             'blocks.*.image' => ['nullable', 'image', 'max:5120'],
             'blocks.*.existing_image_path' => ['nullable', 'string', 'max:2048'],
             'blocks.*.point_title' => ['nullable', 'string', 'max:255'],
             'blocks.*.point_inputs' => ['nullable', 'array'],
             'blocks.*.point_inputs.*' => ['nullable', 'string'],
             'blocks.*.description_body' => ['nullable', 'string'],
+            'blocks.*.heading_text' => ['nullable', 'string', 'max:255'],
         ];
     }
 
@@ -64,6 +65,10 @@ class UpdateBlogRequest extends FormRequest
 
                 if ($type === 'description' && ! filled($block['description_body'] ?? null)) {
                     $validator->errors()->add("blocks.$index.description_body", 'Description is required.');
+                }
+
+                if (in_array($type, ['h2', 'h3', 'h4'], true) && ! filled($block['heading_text'] ?? null)) {
+                    $validator->errors()->add("blocks.$index.heading_text", 'Heading text is required.');
                 }
             }
         });

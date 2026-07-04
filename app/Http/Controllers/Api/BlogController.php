@@ -3,57 +3,60 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Newsletter;
-use App\Models\NewsletterBlock;
+use App\Models\Blog;
+use App\Models\BlogBlock;
 use Illuminate\Http\JsonResponse;
 
-class NewsletterController extends Controller
+class BlogController extends Controller
 {
     public function index(): JsonResponse
     {
-        $newsletters = Newsletter::query()
-            ->with('category')
-            ->latest('published_at')
-            ->latest('id')
+        $blogs = Blog::query()
+            ->with(['category', 'blocks'])
+            ->withCount('blocks')
+            ->latest()
             ->paginate(20);
 
         return response()->json([
             'success' => true,
-            'data' => $newsletters->getCollection()->map(function (Newsletter $newsletter): array {
+            'data' => $blogs->getCollection()->map(function (Blog $blog): array {
+                $firstImage = $blog->blocks->firstWhere('type', 'image');
+                $firstDescription = $blog->blocks->firstWhere('type', 'description');
+
                 return [
-                    'id' => $newsletter->id,
-                    'title' => $newsletter->title,
-                    'category' => $newsletter->category?->name,
-                    'date' => $newsletter->published_at?->format('Y-m-d') ?? $newsletter->created_at?->format('Y-m-d'),
-                    'image_url' => $newsletter->image_path ? asset($newsletter->image_path) : null,
-                    'description' => $newsletter->description,
+                    'id' => $blog->id,
+                    'title' => $blog->title,
+                    'category' => $blog->category?->name,
+                    'featured_image_url' => $firstImage?->image_path ? asset($firstImage->image_path) : null,
+                    'excerpt' => $firstDescription?->point_body,
+                    'blocks_count' => $blog->blocks_count,
+                    'created_at' => $blog->created_at,
+                    'updated_at' => $blog->updated_at,
                 ];
             }),
             'meta' => [
-                'current_page' => $newsletters->currentPage(),
-                'last_page' => $newsletters->lastPage(),
-                'per_page' => $newsletters->perPage(),
-                'total' => $newsletters->total(),
+                'current_page' => $blogs->currentPage(),
+                'last_page' => $blogs->lastPage(),
+                'per_page' => $blogs->perPage(),
+                'total' => $blogs->total(),
             ],
         ]);
     }
 
-    public function show(Newsletter $newsletter): JsonResponse
+    public function show(Blog $blog): JsonResponse
     {
-        $newsletter->load(['category', 'blocks']);
+        $blog->load(['category', 'blocks']);
 
         return response()->json([
             'success' => true,
             'data' => [
-                'id' => $newsletter->id,
-                'title' => $newsletter->title,
-                'category' => $newsletter->category?->name,
-                'date' => $newsletter->published_at?->format('Y-m-d') ?? $newsletter->created_at?->format('Y-m-d'),
-                'image_url' => $newsletter->image_path ? asset($newsletter->image_path) : null,
-                'description' => $newsletter->description,
-                'blocks' => $newsletter->blocks->map(fn (NewsletterBlock $block): array => $this->transformBlock($block))->values(),
-                'created_at' => $newsletter->created_at,
-                'updated_at' => $newsletter->updated_at,
+                'id' => $blog->id,
+                'title' => $blog->title,
+                'category' => $blog->category?->name,
+                'blocks_count' => $blog->blocks->count(),
+                'blocks' => $blog->blocks->map(fn (BlogBlock $block): array => $this->transformBlock($block))->values(),
+                'created_at' => $blog->created_at,
+                'updated_at' => $blog->updated_at,
             ],
         ]);
     }
@@ -61,7 +64,7 @@ class NewsletterController extends Controller
     /**
      * @return array<string, mixed>
      */
-    private function transformBlock(NewsletterBlock $block): array
+    private function transformBlock(BlogBlock $block): array
     {
         if ($block->type === 'image') {
             return [

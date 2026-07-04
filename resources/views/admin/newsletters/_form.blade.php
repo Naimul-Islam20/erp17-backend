@@ -2,8 +2,8 @@
     $initialBlocks = old('blocks');
 
     if ($initialBlocks === null) {
-        $initialBlocks = isset($blog)
-            ? $blog->blocks->map(fn ($block) => [
+        $initialBlocks = isset($newsletter)
+            ? $newsletter->blocks->map(fn ($block) => [
                 'type' => $block->type,
                 'point_title' => $block->point_title,
                 'description_body' => $block->type === 'description' ? $block->point_body : '',
@@ -58,23 +58,23 @@
         <select id="category_id" name="category_id" required>
             <option value="">Select a category</option>
             @foreach ($categories as $category)
-                <option value="{{ $category->id }}" @selected(old('category_id', isset($blog) ? $blog->category_id : null) == $category->id)>{{ $category->name }}</option>
+                <option value="{{ $category->id }}" @selected(old('category_id', isset($newsletter) ? $newsletter->category_id : null) == $category->id)>{{ $category->name }}</option>
             @endforeach
         </select>
         @error('category_id') <div class="error">{{ $message }}</div> @enderror
     </div>
 
     <div style="margin-top: 16px;">
-    <div>
-        <label for="title">Blog Title</label>
-        <input id="title" name="title" value="{{ old('title', isset($blog) ? $blog->title : '') }}" required>
-        @error('title') <div class="error">{{ $message }}</div> @enderror
-    </div>
+        <div>
+            <label for="title">Newsletter Title</label>
+            <input id="title" name="title" value="{{ old('title', isset($newsletter) ? $newsletter->title : '') }}" required>
+            @error('title') <div class="error">{{ $message }}</div> @enderror
+        </div>
     </div>
 
     @error('blocks') <div class="error">{{ $message }}</div> @enderror
 
-    <div id="blogBlocks" class="builder-list" data-next-index="{{ count($initialBlocks) }}">
+    <div id="newsletterBlocks" class="builder-list" data-next-index="{{ count($initialBlocks) }}">
         @foreach ($initialBlocks as $index => $block)
             @if (($block['type'] ?? null) === 'image')
                 <div class="builder-card" data-block-type="image">
@@ -89,15 +89,15 @@
                     <input name="blocks[{{ $index }}][existing_image_path]" type="hidden" value="{{ $block['existing_image_path'] ?? '' }}">
 
                     <div>
-                        <label for="blog-block-image-{{ $index }}">Image</label>
-                        <input id="blog-block-image-{{ $index }}" name="blocks[{{ $index }}][image]" type="file" accept="image/*">
+                        <label for="newsletter-block-image-{{ $index }}">Image</label>
+                        <input id="newsletter-block-image-{{ $index }}" name="blocks[{{ $index }}][image]" type="file" accept="image/*">
                         <small class="helper-text">Select an image for this section.</small>
                         @error('blocks.'.$index.'.image') <div class="error">{{ $message }}</div> @enderror
                     </div>
 
                     @if (! empty($block['existing_image_path']))
                         <div class="block-preview">
-                            <img src="{{ asset($block['existing_image_path']) }}" alt="Blog image preview">
+                            <img src="{{ asset($block['existing_image_path']) }}" alt="Newsletter image preview">
                         </div>
                     @endif
                 </div>
@@ -113,8 +113,8 @@
                     <input name="blocks[{{ $index }}][type]" type="hidden" value="point">
 
                     <div>
-                        <label for="blog-block-point-title-{{ $index }}">Point Title</label>
-                        <input id="blog-block-point-title-{{ $index }}" name="blocks[{{ $index }}][point_title]" value="{{ $block['point_title'] ?? '' }}">
+                        <label for="newsletter-block-point-title-{{ $index }}">Point Title</label>
+                        <input id="newsletter-block-point-title-{{ $index }}" name="blocks[{{ $index }}][point_title]" value="{{ $block['point_title'] ?? '' }}">
                         @error('blocks.'.$index.'.point_title') <div class="error">{{ $message }}</div> @enderror
                     </div>
 
@@ -125,7 +125,7 @@
                                 <div data-point-input-item @if ($pointInputIndex > 0) style="margin-top: 10px;" @endif>
                                     <div class="point-input-row">
                                         <textarea
-                                            id="blog-block-point-body-{{ $index }}-{{ $pointInputIndex }}"
+                                            id="newsletter-block-point-body-{{ $index }}-{{ $pointInputIndex }}"
                                             name="blocks[{{ $index }}][point_inputs][{{ $pointInputIndex }}]"
                                             rows="1">{{ $pointInput }}</textarea>
                                         <button class="icon-delete-btn" type="button" data-remove-point-input aria-label="Remove point input" title="Remove point input">
@@ -164,8 +164,8 @@
                     <input name="blocks[{{ $index }}][type]" type="hidden" value="description">
 
                     <div>
-                        <label for="blog-block-description-{{ $index }}">Description</label>
-                        <textarea id="blog-block-description-{{ $index }}" name="blocks[{{ $index }}][description_body]" rows="4">{{ $block['description_body'] ?? '' }}</textarea>
+                        <label for="newsletter-block-description-{{ $index }}">Description</label>
+                        <textarea id="newsletter-block-description-{{ $index }}" name="blocks[{{ $index }}][description_body]" rows="4">{{ $block['description_body'] ?? '' }}</textarea>
                         @error('blocks.'.$index.'.description_body') <div class="error">{{ $message }}</div> @enderror
                     </div>
                 </div>
@@ -181,8 +181,8 @@
                     <input name="blocks[{{ $index }}][type]" type="hidden" value="{{ $block['type'] }}">
 
                     <div>
-                        <label for="blog-block-heading-{{ $block['type'] }}-{{ $index }}">{{ strtoupper($block['type']) }} Text</label>
-                        <input id="blog-block-heading-{{ $block['type'] }}-{{ $index }}" name="blocks[{{ $index }}][heading_text]" value="{{ $block['heading_text'] ?? '' }}">
+                        <label for="newsletter-block-heading-{{ $block['type'] }}-{{ $index }}">{{ strtoupper($block['type']) }} Text</label>
+                        <input id="newsletter-block-heading-{{ $block['type'] }}-{{ $index }}" name="blocks[{{ $index }}][heading_text]" value="{{ $block['heading_text'] ?? '' }}">
                         @error('blocks.'.$index.'.heading_text') <div class="error">{{ $message }}</div> @enderror
                     </div>
                 </div>
@@ -206,7 +206,7 @@
 
 <script>
     (() => {
-        const container = document.getElementById('blogBlocks');
+        const container = document.getElementById('newsletterBlocks');
 
         if (!container) return;
 
@@ -228,8 +228,8 @@
                 <input name="blocks[${index}][type]" type="hidden" value="image">
                 <input name="blocks[${index}][existing_image_path]" type="hidden" value="">
                 <div>
-                    <label for="blog-block-image-${index}">Image</label>
-                    <input id="blog-block-image-${index}" name="blocks[${index}][image]" type="file" accept="image/*">
+                    <label for="newsletter-block-image-${index}">Image</label>
+                    <input id="newsletter-block-image-${index}" name="blocks[${index}][image]" type="file" accept="image/*">
                     <small class="helper-text">Select an image for this section.</small>
                 </div>
             </div>
@@ -238,7 +238,7 @@
         const pointInputMarkup = (blockIndex, pointInputIndex) => `
             <div data-point-input-item style="margin-top: ${pointInputIndex === 0 ? '0' : '10px'};">
                 <div class="point-input-row">
-                    <textarea id="blog-block-point-body-${blockIndex}-${pointInputIndex}" name="blocks[${blockIndex}][point_inputs][${pointInputIndex}]" rows="1"></textarea>
+                    <textarea id="newsletter-block-point-body-${blockIndex}-${pointInputIndex}" name="blocks[${blockIndex}][point_inputs][${pointInputIndex}]" rows="1"></textarea>
                     <button class="icon-delete-btn" type="button" data-remove-point-input aria-label="Remove point input" title="Remove point input">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <path d="M3 6h18"></path>
@@ -268,8 +268,8 @@
                 </div>
                 <input name="blocks[${index}][type]" type="hidden" value="point">
                 <div>
-                    <label for="blog-block-point-title-${index}">Point Title</label>
-                    <input id="blog-block-point-title-${index}" name="blocks[${index}][point_title]">
+                    <label for="newsletter-block-point-title-${index}">Point Title</label>
+                    <input id="newsletter-block-point-title-${index}" name="blocks[${index}][point_title]">
                 </div>
                 <div style="margin-top: 14px;">
                     <label>Point Input</label>
@@ -290,8 +290,8 @@
                 </div>
                 <input name="blocks[${index}][type]" type="hidden" value="description">
                 <div>
-                    <label for="blog-block-description-${index}">Description</label>
-                    <textarea id="blog-block-description-${index}" name="blocks[${index}][description_body]" rows="4"></textarea>
+                    <label for="newsletter-block-description-${index}">Description</label>
+                    <textarea id="newsletter-block-description-${index}" name="blocks[${index}][description_body]" rows="4"></textarea>
                 </div>
             </div>
         `;
@@ -306,15 +306,11 @@
                 </div>
                 <input name="blocks[${index}][type]" type="hidden" value="${type}">
                 <div>
-                    <label for="blog-block-heading-${type}-${index}">${type.toUpperCase()} Text</label>
-                    <input id="blog-block-heading-${type}-${index}" name="blocks[${index}][heading_text]">
+                    <label for="newsletter-block-heading-${type}-${index}">${type.toUpperCase()} Text</label>
+                    <input id="newsletter-block-heading-${type}-${index}" name="blocks[${index}][heading_text]">
                 </div>
             </div>
         `;
-
-        const syncEmptyState = () => {
-            // Keep for future hooks; no empty state UI needed.
-        };
 
         const createBlock = (type) => {
             const index = getNextIndex();
@@ -324,11 +320,6 @@
             if (['h2', 'h3', 'h4'].includes(type)) return headingBlockMarkup(index, type);
 
             return pointBlockMarkup(index);
-        };
-
-        const appendBlock = (type) => {
-            container.insertAdjacentHTML('beforeend', createBlock(type));
-            syncEmptyState();
         };
 
         const refreshPointInputButtons = (block) => {
@@ -352,7 +343,10 @@
         };
 
         document.querySelectorAll('[data-add-block]').forEach((button) => {
-            button.addEventListener('click', () => appendBlock(button.dataset.addBlock));
+            button.addEventListener('click', () => {
+                container.insertAdjacentHTML('beforeend', createBlock(button.dataset.addBlock));
+                refreshAllPointBlocks();
+            });
         });
 
         container.addEventListener('click', (event) => {
@@ -360,7 +354,6 @@
 
             if (removeButton) {
                 removeButton.closest('.builder-card')?.remove();
-                syncEmptyState();
                 return;
             }
 
@@ -406,13 +399,9 @@
 
                     refreshPointInputButtons(currentBlock);
                 }
-
-                return;
             }
-
         });
 
-        syncEmptyState();
         refreshAllPointBlocks();
     })();
 </script>

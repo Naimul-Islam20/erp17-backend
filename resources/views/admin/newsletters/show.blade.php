@@ -25,17 +25,73 @@
             <div class="detail-value">{{ $newsletter->published_at?->format('Y-m-d') ?? $newsletter->created_at?->format('Y-m-d') }}</div>
         </div>
         <div class="detail-row">
-            <div class="detail-label">Description</div>
-            <div class="detail-value">{{ $newsletter->description }}</div>
+            <div class="detail-label">Blocks</div>
+            <div class="detail-value">{{ $newsletter->blocks->count() }}</div>
         </div>
     </div>
 
-    <div>
-        <label style="margin-bottom:10px;">Image</label>
-        <img
-            src="{{ asset($newsletter->image_path) }}"
-            alt="{{ $newsletter->title }}"
-            style="max-width:100%;width:320px;height:auto;object-fit:cover;border-radius:8px;border:1px solid #e2e8f0;">
+    <div class="builder-list" style="margin-top:0;">
+        @forelse ($newsletter->blocks as $block)
+            @if ($block->type === 'image')
+                <div class="builder-card">
+                    <div class="builder-card-header" style="margin-bottom:0;">
+                        <div class="builder-card-title">Image</div>
+                    </div>
+
+                    <div class="block-preview" style="max-width: 420px; margin-top: 12px;">
+                        <img src="{{ asset($block->image_path) }}" alt="Newsletter image">
+                    </div>
+                </div>
+            @elseif ($block->type === 'point')
+                @php
+                    $pointInputs = json_decode((string) $block->point_body, true);
+                    $pointInputs = is_array($pointInputs)
+                        ? array_values(array_filter($pointInputs, fn ($item) => filled($item)))
+                        : [trim((string) $block->point_body)];
+                @endphp
+                <div class="builder-card">
+                    <div class="builder-card-header" style="margin-bottom:12px;">
+                        <div class="builder-card-title">Point</div>
+                    </div>
+
+                    <div class="detail-list">
+                        <div class="detail-row">
+                            <div class="detail-label">Point Title</div>
+                            <div class="detail-value">{{ $block->point_title }}</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">Point Input</div>
+                            <div class="detail-value">
+                                @foreach ($pointInputs as $pointInput)
+                                    <div @if (! $loop->first) style="margin-top: 10px;" @endif>{!! nl2br(e($pointInput)) !!}</div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @elseif ($block->type === 'description')
+                <div class="builder-card">
+                    <div class="detail-list">
+                        <div class="detail-row">
+                            <div class="detail-label">Description</div>
+                            <div class="detail-value">{!! nl2br(e($block->point_body)) !!}</div>
+                        </div>
+                    </div>
+                </div>
+            @else
+                <div class="builder-card">
+                    @if ($block->type === 'h2')
+                        <h2 style="margin:0;color:#1e1e6d;">{{ $block->point_body }}</h2>
+                    @elseif ($block->type === 'h3')
+                        <h3 style="margin:0;color:#1e1e6d;">{{ $block->point_body }}</h3>
+                    @else
+                        <h4 style="margin:0;color:#1e1e6d;">{{ $block->point_body }}</h4>
+                    @endif
+                </div>
+            @endif
+        @empty
+            <div class="empty-builder">No newsletter content blocks found.</div>
+        @endforelse
     </div>
 </div>
 @endsection

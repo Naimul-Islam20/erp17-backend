@@ -13,6 +13,8 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::middleware('throttle:30,1')->group(function (): void {
+    Route::get('/blogs', [\App\Http\Controllers\Api\BlogController::class, 'index']);
+    Route::get('/blogs/{blog}', [\App\Http\Controllers\Api\BlogController::class, 'show']);
     Route::get('/newsletters', [NewsletterController::class, 'index']);
     Route::get('/newsletters/{newsletter}', [NewsletterController::class, 'show']);
 });

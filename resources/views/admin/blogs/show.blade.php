@@ -65,7 +65,7 @@
                         </div>
                     </div>
                 </div>
-            @else
+            @elseif ($block->type === 'description')
                 <div class="builder-card">
                     <div class="detail-list">
                         <div class="detail-row">
@@ -73,6 +73,16 @@
                             <div class="detail-value">{!! nl2br(e($block->point_body)) !!}</div>
                         </div>
                     </div>
+                </div>
+            @else
+                <div class="builder-card">
+                    @if ($block->type === 'h2')
+                        <h2 style="margin:0;color:#1e1e6d;">{{ $block->point_body }}</h2>
+                    @elseif ($block->type === 'h3')
+                        <h3 style="margin:0;color:#1e1e6d;">{{ $block->point_body }}</h3>
+                    @else
+                        <h4 style="margin:0;color:#1e1e6d;">{{ $block->point_body }}</h4>
+                    @endif
                 </div>
             @endif
         @empty
