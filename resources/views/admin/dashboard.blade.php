@@ -5,18 +5,21 @@
     <h1>Dashboard</h1>
 </div>
 
-<div class="grid grid-2">
-    <div class="card">
-        <h3>Total Users</h3>
-        <p>{{ $totalUsers }}</p>
+<div class="stats-grid">
+    <div class="card stat-card">
+        <p class="stat-label">Total Users</p>
+        <p class="stat-value">{{ $totalUsers }}</p>
+        <div class="stat-meta">Users</div>
     </div>
-    <div class="card">
-        <h3>Quote Requests (New)</h3>
-        <p>{{ $newQuoteRequests }}</p>
+    <div class="card stat-card">
+        <p class="stat-label">Quote Requests</p>
+        <p class="stat-value">{{ $newQuoteRequests }}</p>
+        <div class="stat-meta">New</div>
     </div>
-    <div class="card">
-        <h3>Contact (New)</h3>
-        <p>{{ $newExpertSessions }}</p>
+    <div class="card stat-card">
+        <p class="stat-label">Contact</p>
+        <p class="stat-value">{{ $newExpertSessions }}</p>
+        <div class="stat-meta">New</div>
     </div>
 </div>
 @endsection

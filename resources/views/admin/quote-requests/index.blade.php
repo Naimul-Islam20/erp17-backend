@@ -5,46 +5,53 @@
         <h1>Quote Requests</h1>
     </div>
 
-    <div class="card">
-        <div class="table-wrap">
+    <div class="list-shell">
+        <div class="table-wrap table-wrap-flat">
         <table>
             <thead>
                 <tr>
                     <th>Name</th>
                     <th>Company</th>
-                    <th>Employees</th>
-                    <th>Email</th>
                     <th>Status</th>
-                    <th>Submitted</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
                 @forelse ($quoteRequests as $request)
                     <tr>
-                        <td>{{ $request->name }}</td>
-                        <td>{{ $request->company_name }}</td>
-                        <td>{{ $request->employee_count ?? '-' }}</td>
-                        <td>{{ $request->email }}</td>
+                        <td>{{ \Illuminate\Support\Str::words($request->name, 3, '...') }}</td>
+                        <td>{{ \Illuminate\Support\Str::words($request->company_name, 3, '...') }}</td>
                         <td>
                             <span class="status {{ $request->status === 'new' ? 'status-unread' : 'status-review' }}">
                                 {{ $request->status }}
                             </span>
                         </td>
-                        <td>{{ $request->created_at?->format('Y-m-d H:i') }}</td>
-                        <td>
+                        <td class="actions-cell">
                             <div class="action-group">
-                                <a class="btn btn-muted" href="{{ route('admin.quote-requests.show', $request) }}">View</a>
+                                <a class="btn btn-muted icon-action-btn" href="{{ route('admin.quote-requests.show', $request) }}" title="View" aria-label="View">
+                                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                                        <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"></path>
+                                        <circle cx="12" cy="12" r="3"></circle>
+                                    </svg>
+                                </a>
                                 <form method="POST" action="{{ route('admin.quote-requests.destroy', $request) }}" style="display:inline;">
                                     @csrf
                                     @method('DELETE')
-                                    <button class="btn btn-danger" type="submit" onclick="return confirm('Delete this quote request?')">Delete</button>
+                                    <button class="btn btn-danger icon-action-btn" type="submit" onclick="return confirm('Delete this quote request?')" title="Delete" aria-label="Delete">
+                                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                                            <path d="M3 6h18"></path>
+                                            <path d="M8 6V4h8v2"></path>
+                                            <path d="M19 6l-1 14H6L5 6"></path>
+                                            <path d="M10 11v6"></path>
+                                            <path d="M14 11v6"></path>
+                                        </svg>
+                                    </button>
                                 </form>
                             </div>
                         </td>
                     </tr>
                 @empty
-                    <tr><td colspan="7">No quote requests found.</td></tr>
+                    <tr><td colspan="4">No quote requests found.</td></tr>
                 @endforelse
             </tbody>
         </table>
