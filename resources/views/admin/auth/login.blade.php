@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Login</title>
-    <link rel="icon" type="image/png" href="{{ asset('Website.png') }}">
+    <link rel="icon" type="image/png" href="{{ asset('website.png') }}">
     <style>
         :root {
             --primary: #3ba100;
@@ -50,10 +50,11 @@
         }
 
         .hero-logo {
-            width: min(210px, 100%);
+            width: min(180px, 100%);
             height: auto;
             display: block;
             margin: 0 auto 18px;
+            object-fit: contain;
         }
 
         .card {
@@ -198,7 +199,7 @@
     <div class="login-shell">
         <form class="card" method="POST" action="{{ route('admin.login.store') }}">
             @csrf
-            <img src="{{ asset('Website.png') }}" alt="ERP17" class="hero-logo">
+            <img src="{{ asset('website.png') }}" alt="ERP17" class="hero-logo">
             <h2>Welcome back</h2>
             <p class="subtext">Sign in to continue.</p>
 

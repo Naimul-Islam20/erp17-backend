@@ -22,6 +22,7 @@ class UpdateEducationRequest extends FormRequest
     {
         return [
             'title' => ['required', 'string', 'max:255'],
+            'category_id' => ['required', 'integer', 'exists:newsletter_categories,id'],
             'youtube_link' => ['required', 'url', 'max:2048'],
         ];
     }

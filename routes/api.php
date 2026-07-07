@@ -17,6 +17,8 @@ Route::middleware('throttle:30,1')->group(function (): void {
     Route::get('/blogs/{blog}', [\App\Http\Controllers\Api\BlogController::class, 'show']);
     Route::get('/newsletters', [NewsletterController::class, 'index']);
     Route::get('/newsletters/{newsletter}', [NewsletterController::class, 'show']);
+    Route::get('/educations', [\App\Http\Controllers\Api\EducationController::class, 'index']);
+    Route::get('/educations/{education}', [\App\Http\Controllers\Api\EducationController::class, 'show']);
 });
 
 Route::middleware('throttle:10,1')->group(function (): void {

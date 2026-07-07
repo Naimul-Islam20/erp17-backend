@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $title ?? 'Admin Panel' }}</title>
-    <link rel="icon" type="image/png" href="{{ asset('Website.png') }}">
+    <link rel="icon" type="image/png" href="{{ asset('website.png') }}">
     <style>
         :root {
             --primary: #3ba100;
@@ -83,13 +83,11 @@
         }
 
         .topbar-sidebar img {
-            position: static;
-            height: 44px;
+            height: 40px;
             width: auto;
+            max-width: 100%;
             display: block;
-            clip-path: inset(12% 0 12% 0);
-            transform: scale(2.2);
-            transform-origin: center center;
+            object-fit: contain;
         }
 
         .top-header {
@@ -212,12 +210,11 @@
 
         .sidebar-top-logo img,
         .mobile-sidebar-logo img {
-            height: 108px;
+            height: 40px;
             width: auto;
+            max-width: 100%;
             display: block;
-            clip-path: inset(28% 0 28% 0);
-            transform: scale(1.28);
-            transform-origin: center center;
+            object-fit: contain;
         }
 
         .mobile-sidebar-head,
@@ -923,20 +920,17 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                width: 140px;
-                height: 48px;
-                overflow: hidden;
+                max-width: 160px;
                 transform: translate(-50%, -50%);
                 pointer-events: none;
             }
 
             .mobile-header-logo img {
-                height: 92px;
+                height: 34px;
                 width: auto;
+                max-width: 100%;
                 display: block;
-                clip-path: inset(32% 0 32% 0);
-                transform: scale(1.18);
-                transform-origin: center center;
+                object-fit: contain;
             }
 
             aside {
@@ -957,17 +951,16 @@
             .mobile-sidebar-logo {
                 display: flex;
                 flex: 1;
-                height: 48px;
                 align-items: center;
-                justify-content: center;
-                overflow: hidden;
+                justify-content: flex-start;
             }
 
             .mobile-sidebar-logo img {
-                height: 92px;
-                clip-path: inset(32% 0 32% 0);
-                transform: scale(1.18);
-                transform-origin: center center;
+                height: 34px;
+                width: auto;
+                max-width: 100%;
+                display: block;
+                object-fit: contain;
             }
 
             .mobile-sidebar-head {
@@ -1145,7 +1138,7 @@
         <div class="layout-topbar">
             <div class="topbar-sidebar">
                 <div class="sidebar-top-logo">
-                    <img src="{{ asset('Website.png') }}" alt="ERP17">
+                    <img src="{{ asset('website.png') }}" alt="ERP17">
                 </div>
             </div>
             <div class="top-header">
@@ -1153,7 +1146,7 @@
                     <button type="button" class="menu-toggle" id="menuToggle" aria-label="Open menu">☰</button>
                 </div>
                 <div class="mobile-header-logo" aria-hidden="true">
-                    <img src="{{ asset('Website.png') }}" alt="ERP17">
+                    <img src="{{ asset('website.png') }}" alt="ERP17">
                 </div>
                 <div class="top-header-right">
                     <form method="POST" action="{{ route('admin.logout') }}" class="logout-form">
@@ -1168,7 +1161,7 @@
             <aside>
                 <div class="mobile-sidebar-head">
                     <div class="mobile-sidebar-logo">
-                        <img src="{{ asset('Website.png') }}" alt="ERP17">
+                        <img src="{{ asset('website.png') }}" alt="ERP17">
                     </div>
                     <button type="button" class="sidebar-close" id="sidebarClose" aria-label="Close menu">×</button>
                 </div>

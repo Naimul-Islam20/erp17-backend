@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreEducationRequest;
 use App\Http\Requests\Admin\UpdateEducationRequest;
 use App\Models\Education;
+use App\Models\NewsletterCategory;
 use App\Support\AuditLogger;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
@@ -17,7 +18,7 @@ class EducationController extends Controller
         $this->authorize('viewAny', Education::class);
 
         return view('admin.educations.index', [
-            'educations' => Education::query()->latest()->paginate(20)->withQueryString(),
+            'educations' => Education::query()->with('category')->latest()->paginate(20)->withQueryString(),
         ]);
     }
 
@@ -27,12 +28,13 @@ class EducationController extends Controller
 
         return view('admin.educations.create', [
             'education' => new Education(),
+            'categories' => NewsletterCategory::query()->orderBy('name')->get(),
         ]);
     }
 
     public function store(StoreEducationRequest $request): RedirectResponse
     {
-        $education = Education::create($request->safe()->only(['title', 'youtube_link']));
+        $education = Education::create($request->safe()->only(['title', 'category_id', 'youtube_link']));
 
         AuditLogger::log('admin.education.created', $education, [], $request);
 
@@ -44,7 +46,8 @@ class EducationController extends Controller
         $this->authorize('update', $education);
 
         return view('admin.educations.edit', [
-            'education' => $education,
+            'education' => $education->load('category'),
+            'categories' => NewsletterCategory::query()->orderBy('name')->get(),
         ]);
     }
 
@@ -52,7 +55,7 @@ class EducationController extends Controller
     {
         $this->authorize('update', $education);
 
-        $education->fill($request->safe()->only(['title', 'youtube_link']));
+        $education->fill($request->safe()->only(['title', 'category_id', 'youtube_link']));
 
         if (! $education->isDirty()) {
             return redirect()->route('admin.educations.edit', $education)->with('warning', 'No changes found. Education was not updated.');

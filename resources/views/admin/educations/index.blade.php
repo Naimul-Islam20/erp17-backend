@@ -13,6 +13,7 @@
                 <tr>
                     <th>ID</th>
                     <th>Title</th>
+                    <th>Category</th>
                     <th>YouTube Link</th>
                     <th>Created</th>
                     <th>Actions</th>
@@ -23,6 +24,7 @@
                     <tr>
                         <td>{{ $education->id }}</td>
                         <td>{{ $education->title }}</td>
+                        <td>{{ $education->category?->name ?? '—' }}</td>
                         <td>
                             <a href="{{ $education->youtube_link }}" target="_blank" rel="noopener noreferrer">
                                 {{ $education->youtube_link }}
@@ -55,7 +57,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="5">No education items found.</td>
+                        <td colspan="6">No education items found.</td>
                     </tr>
                 @endforelse
             </tbody>
